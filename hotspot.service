@@ -1,0 +1,14 @@
+[Unit]
+Description=Hotspot Pix Flask App
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/hotspot-pix
+ExecStart=/usr/bin/make run
+ExecStop=/usr/bin/make stop
+Restart=always
+User=pi
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

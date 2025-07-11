@@ -99,3 +99,58 @@ hotspot-pix/
 ## ✍️ Licença
 
 Projeto desenvolvido por [@hknorst](https://github.com/hknorst). Uso livre para fins educacionais, comunitários ou comerciais com créditos.
+---
+
+## 🛠️ Automação com Makefile
+
+Este projeto inclui um `Makefile` para facilitar a configuração:
+
+| Comando         | Ação                                                                 |
+|----------------|----------------------------------------------------------------------|
+| `make init`    | Cria o banco de dados e diretórios de QR codes                       |
+| `make cron`    | Adiciona o `expire_vouchers.py` ao crontab (executa a cada minuto)   |
+| `make run`     | Sobe o sistema com Docker                                            |
+| `make stop`    | Derruba os containers                                                |
+| `make logs`    | Mostra logs do container em tempo real                               |
+| `make clean`   | Remove QR codes e o banco de dados                                   |
+| `make rebuild` | Rebuilda e reinicia os containers                                    |
+
+Execute os comandos na raiz do projeto com:
+
+```bash
+make init
+make cron
+make run
+```
+
+---
+
+## 🔄 Inicialização automática com systemd
+
+Para iniciar o sistema automaticamente no boot:
+
+1. Copie o arquivo de serviço:
+   ```bash
+   sudo cp hotspot.service /etc/systemd/system/
+   ```
+
+2. Recarregue os daemons:
+   ```bash
+   sudo systemctl daemon-reexec
+   sudo systemctl daemon-reload
+   ```
+
+3. Ative o serviço:
+   ```bash
+   sudo systemctl enable hotspot
+   ```
+
+4. Inicie manualmente:
+   ```bash
+   sudo systemctl start hotspot
+   ```
+
+Verifique o status com:
+```bash
+sudo systemctl status hotspot
+```
