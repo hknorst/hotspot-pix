@@ -34,45 +34,48 @@ Sistema completo de hotspot com pagamento via Pix, desenvolvido para rodar em um
 ```bash
 git clone https://github.com/hknorst/hotspot-pix.git
 cd hotspot-pix
-2. Configure sua chave do MercadoPago
-Abra app.py e insira sua ACCESS_TOKEN:
+```
 
-python
-Copy
-Edit
+### 2. Configure sua chave do MercadoPago
+
+Abra `app.py` e insira sua `ACCESS_TOKEN`:
+
+```python
 ACCESS_TOKEN = "SUA_CHAVE_MERCADOPAGO"
-3. Construa e inicie com Docker
-bash
-Copy
-Edit
+```
+
+### 3. Construa e inicie com Docker
+
+```bash
 docker-compose build
 docker-compose up -d
-📡 Como funciona o fluxo
-Cliente conecta ao Wi-Fi gerenciado pela Raspberry Pi
+```
 
-Nodogsplash redireciona para http://192.168.10.1:5000/
+---
 
-Usuário escolhe o plano (1h, 3h, 24h)
+## 📡 Como funciona o fluxo
 
-Sistema gera um QR Code Pix
+1. Cliente conecta ao Wi-Fi gerenciado pela Raspberry Pi
+2. Nodogsplash redireciona para `http://192.168.10.1:5000/`
+3. Usuário escolhe o plano (1h, 3h, 24h)
+4. Sistema gera um QR Code Pix
+5. Após pagamento, o voucher é gerado e:
+   - Pode ser impresso
+   - Pode ser usado diretamente com link ou código
 
-Após pagamento, o voucher é gerado e:
+---
 
-Pode ser impresso
+## 🖨️ Impressora Elgin i9
 
-Pode ser usado diretamente com link ou código
+- Detectada via USB no Raspberry Pi
+- Impressão via `python-escpos`
+- Automática ao final do fluxo (ou opcional pelo botão "Imprimir")
 
-🖨️ Impressora Elgin i9
-Detectada via USB no Raspberry Pi
+---
 
-Impressão via python-escpos
+## 📂 Estrutura do Projeto
 
-Automática ao final do fluxo (ou opcional pelo botão "Imprimir")
-
-📂 Estrutura do Projeto
-cpp
-Copy
-Edit
+```
 hotspot-pix/
 ├── Dockerfile
 ├── docker-compose.yml
@@ -89,5 +92,10 @@ hotspot-pix/
 │   └── voucher.html
 └── static/
     └── qrcodes/
-✍️ Licença
-Projeto desenvolvido por @hknorst. Uso livre para fins educacionais, comunitários ou comerciais com créditos.
+```
+
+---
+
+## ✍️ Licença
+
+Projeto desenvolvido por [@hknorst](https://github.com/hknorst). Uso livre para fins educacionais, comunitários ou comerciais com créditos.
