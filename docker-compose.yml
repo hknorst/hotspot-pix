@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  hotspot:
+    build: .
+    restart: always
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - ./vouchers.db:/app/vouchers.db
+      - /dev/bus/usb:/dev/bus/usb

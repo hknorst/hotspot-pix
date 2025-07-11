@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head><title>Pagamento via Pix</title></head>
+<body>
+  <h2>Escaneie o QR Code Pix para pagar</h2>
+  <img src="data:image/png;base64,{{ qr }}" width="300" />
+  <p>Após pagar, clique: <a href="/verificar?id={{ id }}&plano={{ plano }}">Verificar Pagamento</a></p>
+</body>
+</html>

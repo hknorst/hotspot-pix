@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Voucher Liberado</title></head>
+<body>
+  <h2>Seu voucher foi gerado!</h2>
+  <p>Código: <strong>{{ codigo }}</strong></p>
+  <img src="/static/qrcodes/{{ codigo }}.png" width="200" /><br><br>
+  <form method="post" action="/imprimir">
+    <input type="hidden" name="codigo" value="{{ codigo }}">
+    <button type="submit">🖨️ Imprimir Voucher</button>
+  </form>
+  <br>
+  <a href="http://192.168.10.1/?voucher={{ codigo }}">Entrar no Wi-Fi automaticamente</a>
+</body>
+</html>
