@@ -19,8 +19,17 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
+# Determina ambiente (sandbox ou produção)
+MP_ENV = os.getenv("MP_ENV", "production").lower()
+
+if MP_ENV == "sandbox":
+    ACCESS_TOKEN = os.getenv("ACCESS_TOKEN_SANDBOX")
+    logging.info("[AMBIENTE] Usando credenciais de SANDBOX")
+else:
+    ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+    logging.info("[AMBIENTE] Usando credenciais de PRODUÇÃO")
+
 app = Flask(__name__)
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 sdk = mercadopago.SDK(ACCESS_TOKEN)
 
 PLANOS = {
@@ -53,10 +62,11 @@ def pagar():
     }
 
     payment = sdk.payment().create(body)
+    payment_id = payment["response"]["id"]  # ✅ primeiro define
     logging.info(
         f"[INICIADO] Plano: {plano}, ID: {payment_id}, Valor: {info['valor']}")
+
     qr_code_base64 = payment["response"]["point_of_interaction"]["transaction_data"]["qr_code_base64"]
-    payment_id = payment["response"]["id"]
 
     return render_template("pagamento.html", qr=qr_code_base64, id=payment_id, plano=plano)
 
@@ -67,10 +77,8 @@ def verificar():
     plano = request.args.get("plano")
 
     result = sdk.payment().get(payment_id)
-    # LOG DO STATUS
-    logging.info(f"[STATUS] Pagamento {payment_id} → {status}")
-
     status = result["response"]["status"]
+    logging.info(f"[STATUS] Pagamento {payment_id} → {status}")
 
     if status == "approved":
         duracao = PLANOS[plano]["duracao"]

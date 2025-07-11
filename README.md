@@ -154,3 +154,34 @@ Verifique o status com:
 ```bash
 sudo systemctl status hotspot
 ```
+---
+
+## 🌐 Redirecionamento do Nodogsplash para o Flask
+
+Para usar o seu sistema Flask como o portal cativo completo (em vez da página splash.html interna do Nodogsplash), siga os passos abaixo:
+
+### 🔧 1. Edite o arquivo de configuração do Nodogsplash
+
+```bash
+sudo nano /etc/nodogsplash/nodogsplash.conf
+```
+
+### ✏️ 2. Adicione ou edite a seguinte linha:
+
+```conf
+RedirectURL http://192.168.10.1:5000/
+```
+
+Isso faz com que qualquer dispositivo conectado ao Wi-Fi seja automaticamente redirecionado para a interface web do seu sistema Flask, onde o cliente pode escolher o plano, pagar e acessar com o voucher.
+
+### 🔁 3. Reinicie o Nodogsplash
+
+```bash
+sudo systemctl restart nodogsplash
+```
+
+### ✅ 4. Teste o fluxo
+
+1. Conecte um dispositivo ao Wi-Fi
+2. O navegador abrirá automaticamente a URL `http://192.168.10.1:5000/`
+3. O cliente verá a página de planos e poderá seguir com o pagamento via Pix
