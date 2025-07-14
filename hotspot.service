@@ -12,3 +12,19 @@ Environment=PYTHONUNBUFFERED=1
 
 [Install]
 WantedBy=multi-user.target
+
+# --- systemd service: hotspot.service ---
+
+[Unit]
+Description=Hotspot Flask Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/udoo/hotspot-pix/app.py
+WorkingDirectory=/home/udoo/hotspot-pix
+Restart=always
+Environment=FLASK_ENV=production
+EnvironmentFile=/home/udoo/hotspot-pix/.env
+
+[Install]
+WantedBy=multi-user.target

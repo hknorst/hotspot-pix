@@ -1,0 +1,2 @@
+# Expira vouchers a cada 1 minuto
+* * * * * /usr/bin/python3 /home/$(whoami)/hotspot-pix/expire_vouchers.py >> /home/$(whoami)/hotspot-pix/logs/cron.log 2>&1
