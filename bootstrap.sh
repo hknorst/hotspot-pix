@@ -27,8 +27,12 @@ else
 fi
 
 # Permissões
-sudo usermod -aG docker $(whoami)
-newgrp docker
+if [ -n "$SUDO_USER" ]; then
+  echo "Adicionando $SUDO_USER ao grupo docker..."
+  sudo usermod -aG docker "$SUDO_USER"
+else
+  echo "[!] Variável SUDO_USER não definida. Pule a alteração de grupo manualmente."
+fi
 
 # Subindo container com verificação
 echo "[2/3] Subindo container..."
