@@ -30,12 +30,25 @@ fi
 sudo usermod -aG docker $(whoami)
 newgrp docker
 
+# Subindo container com verificação
 echo "[2/3] Subindo container..."
-docker compose up -d --build
+if docker compose up -d --build; then
+  echo "[✔] Container iniciado com sucesso."
+else
+  echo "[✖] Erro ao iniciar o container. Verifique os logs."
+  exit 1
+fi
 
 sleep 3
 
+# Inicializando banco de dados com verificação
 echo "[3/3] Inicializando banco de dados..."
-docker compose exec hotspot python generate_vouchers.py --init
+if docker compose exec hotspot python generate_vouchers.py --init; then
+  echo "[✔] Banco de dados inicializado."
+else
+  echo "[✖] Falha ao inicializar o banco. Verifique se o container está rodando corretamente."
+  docker compose logs
+  exit 1
+fi
 
 echo "[✔] Setup Docker completo! Acesse http://<IP-da-placa>:5000"
