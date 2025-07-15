@@ -107,3 +107,7 @@ def imprimir():
     from print_voucher import print_voucher
     print_voucher(codigo)
     return f"Voucher {codigo} enviado para impressão!"
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

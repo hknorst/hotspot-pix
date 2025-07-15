@@ -3,3 +3,4 @@ mercadopago
 qrcode
 pillow
 python-escpos
+python-dotenv
